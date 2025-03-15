@@ -1,0 +1,39 @@
+[gd_scene load_steps=4 format=3 uid="uid://dtiym8y1wv5om"]
+
+[ext_resource type="Texture2D" uid="uid://8k283uci1dtu" path="res://Art/UI/Pause/settings/menubutton.png" id="1_x8vks"]
+[ext_resource type="Texture2D" uid="uid://b62ibdupapsg0" path="res://Art/UI/Pause/settings/menubutton_selected.png" id="2_e43bm"]
+[ext_resource type="FontFile" uid="uid://ulscv1lpl8mn" path="res://Art/Fonts/Questrial-Regular.ttf" id="3_crega"]
+
+[node name="Respawn" type="CenterContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Graphics" type="TextureButton" parent="."]
+z_as_relative = false
+custom_minimum_size = Vector2(200, 60)
+layout_mode = 2
+texture_normal = ExtResource("1_x8vks")
+texture_hover = ExtResource("2_e43bm")
+texture_focused = ExtResource("2_e43bm")
+ignore_texture_size = true
+stretch_mode = 4
+metadata/_edit_group_ = true
+
+[node name="Label" type="Label" parent="Graphics"]
+z_as_relative = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("3_crega")
+theme_override_font_sizes/font_size = 40
+text = "Respawn"
+horizontal_alignment = 1
+vertical_alignment = 1

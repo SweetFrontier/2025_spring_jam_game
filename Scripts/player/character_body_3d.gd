@@ -47,7 +47,6 @@ func _ready():
 	perShotEnergy = initialPerShotEnergy
 	perSecSprintEnergy = initialPerSecSprintEnergy
 	fireRate = initialFireRate
-	upgrade(Upgrade.REDUCESHOTENERGY)
 
 # Handle Inputs
 func _input(event):
