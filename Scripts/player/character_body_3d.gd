@@ -5,6 +5,10 @@ const SPRINT_ADDED_SPD = 12.0
 const JUMP_VELOCITY = 20
 const EXP_DECAY = 15.0;
 
+@export var bullet_scene: PackedScene
+@export var fire_rate: float = 0.2
+@export var spread_amount: float = 6.0  # Degrees of variation
+var can_shoot = true
 ## TODO:
 # add power mechanic where battery goes up within @exported specified radius from origin
 # add shoot mechanic (left click) play $shootsound
@@ -21,7 +25,7 @@ const EXP_DECAY = 15.0;
 var StopMoving : bool = false
 
 var CamRotation : Vector2 = Vector2(0.0,0.0)
-var sensitivity = 0.01
+var sensitivity = 0.0025
 var interactive_element_selected : Node3D = null
 
 func _ready():
@@ -71,6 +75,11 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 
 func _process(_delta: float) -> void:
+	if Input.is_action_pressed("shoot") and can_shoot:
+		shoot()
+		can_shoot = false
+		await get_tree().create_timer(fire_rate).timeout
+		can_shoot = true
 	if (StopMoving): return
 	if (playerLookingAt.is_colliding()):
 		if (playerLookingAt.get_collider().is_in_group("npc")):
@@ -86,6 +95,19 @@ func _process(_delta: float) -> void:
 func freeze(freeze : bool):
 	StopMoving = freeze
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE if freeze else Input.MOUSE_MODE_CAPTURED)
+
+func shoot():
+	if bullet_scene:
+		var bullet = bullet_scene.instantiate()
+		bullet.global_transform = $Camera3D/Gun/Muzzle.global_transform  # Spawn at muzzle position
+		
+		# Add a slight variation in angle
+		var random_rotation = Basis()
+		random_rotation = random_rotation.rotated(Vector3.RIGHT, deg_to_rad(randf_range(-spread_amount, spread_amount)))  # Vertical spread
+		random_rotation = random_rotation.rotated(Vector3.UP, deg_to_rad(randf_range(-spread_amount, spread_amount)))  # Horizontal spread
+		
+		bullet.direction = -($Camera3D/Gun/Muzzle.global_transform.basis * random_rotation).z  # Apply spread
+		get_tree().current_scene.add_child(bullet)
 
 # i saw a yt video by freya holmer abt this being a better exponential lerp
 func expDecay(a, b, decay, dt):

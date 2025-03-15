@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=3 uid="uid://cacjeaj63ofv0"]
 
-[ext_resource type="VideoStream" path="res://Art/Splashscreen/Splashscreen.ogv" id="1_jkyml"]
-[ext_resource type="Script" path="res://Scripts/splashscreen.gd" id="1_s0hym"]
+[ext_resource type="VideoStream" uid="uid://dy2urxmiysvey" path="res://Art/Splashscreen/Splashscreen.ogv" id="1_jkyml"]
+[ext_resource type="Script" uid="uid://3ixgna642p7c" path="res://Scripts/splashscreen.gd" id="1_s0hym"]
 [ext_resource type="PackedScene" uid="uid://bm67c4ebptsl8" path="res://Scenes/ScreenFx/Fader.tscn" id="3_4rorx"]
 [ext_resource type="AudioStream" uid="uid://wbk1fd68dwru" path="res://Sounds/UI/pressbutton.ogg" id="3_tggmv"]
 
@@ -39,8 +39,8 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_pckcx"]
 _data = {
-"skipAppear": SubResource("Animation_5k3gu"),
-"skipDisappear": SubResource("Animation_sq7ib")
+&"skipAppear": SubResource("Animation_5k3gu"),
+&"skipDisappear": SubResource("Animation_sq7ib")
 }
 
 [node name="splashscreen" type="Control" node_paths=PackedStringArray("splashscreenVideo", "transitionToBlack", "buttonSound", "SkipButton")]
@@ -82,7 +82,7 @@ text = "Double Click to Skip"
 
 [node name="MakeSkipAppear" type="AnimationPlayer" parent="DoubleClick"]
 libraries = {
-"": SubResource("AnimationLibrary_pckcx")
+&"": SubResource("AnimationLibrary_pckcx")
 }
 
 [node name="Fader" parent="." instance=ExtResource("3_4rorx")]

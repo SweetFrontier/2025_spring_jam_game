@@ -1,4 +1,4 @@
-[gd_scene load_steps=47 format=3 uid="uid://b88uq376j87ia"]
+[gd_scene load_steps=48 format=3 uid="uid://b88uq376j87ia"]
 
 [ext_resource type="PackedScene" uid="uid://bm67c4ebptsl8" path="res://Scenes/ScreenFx/Fader.tscn" id="1_grrho"]
 [ext_resource type="Script" uid="uid://cgmy1ler11cs2" path="res://Scripts/UI/dialogue.gd" id="2_wdb4l"]
@@ -19,6 +19,7 @@
 [ext_resource type="PackedScene" uid="uid://dsydmqi4so3oo" path="res://Scenes/Screens/settings_menu.tscn" id="17_xus16"]
 [ext_resource type="AudioStream" uid="uid://xdt26g6m81de" path="res://Sounds/Music/ominous_organ.ogg" id="18_tq68o"]
 [ext_resource type="Script" uid="uid://nv2oty0wji17" path="res://Scripts/player/character_body_3d.gd" id="19_40gf1"]
+[ext_resource type="PackedScene" uid="uid://cf80mkarve2it" path="res://Scenes/bullet.tscn" id="20_grrho"]
 [ext_resource type="AudioStream" uid="uid://djgwmulqbi6kh" path="res://Sounds/player/jump.wav" id="20_qlmlk"]
 [ext_resource type="CompressedTexture2DArray" uid="uid://dwoum0uaahlt8" path="res://Scenes/Levels/level_bad.exr" id="21_anobo"]
 [ext_resource type="ArrayMesh" uid="uid://ffina0jm5xkk" path="res://Art/Models/cave_Cube_001.res" id="23_tho3r"]
@@ -406,6 +407,7 @@ shadow_enabled = true
 [node name="player" type="CharacterBody3D" parent="." node_paths=PackedStringArray("DialogueGUI", "prompts", "camera")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.78839, 0)
 script = ExtResource("19_40gf1")
+bullet_scene = ExtResource("20_grrho")
 DialogueGUI = NodePath("../MenuOverlay/Dialogue")
 prompts = NodePath("../MenuOverlay/prompts")
 camera = NodePath("Camera3D")
@@ -421,6 +423,12 @@ transform = Transform3D(1, 0, 0, 0, 0.967612, 0.252441, 0, -0.252441, 0.967612, 
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.25, 0, 0)
 target_position = Vector3(0, 0, -5)
 collision_mask = 8
+
+[node name="Gun" type="Node3D" parent="player/Camera3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.532966, -0.924335, -0.24115)
+metadata/_edit_group_ = true
+
+[node name="Muzzle" type="Marker3D" parent="player/Camera3D/Gun"]
 
 [node name="shootsound" type="AudioStreamPlayer3D" parent="player"]
 stream = ExtResource("20_qlmlk")

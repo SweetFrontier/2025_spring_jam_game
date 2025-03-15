@@ -1,7 +1,8 @@
-[gd_scene load_steps=10 format=3 uid="uid://b6bgnigukck67"]
+[gd_scene load_steps=11 format=3 uid="uid://b6bgnigukck67"]
 
 [ext_resource type="Script" uid="uid://nv2oty0wji17" path="res://Scripts/player/character_body_3d.gd" id="1_cvnsp"]
 [ext_resource type="AudioStream" uid="uid://djgwmulqbi6kh" path="res://Sounds/player/jump.wav" id="2_6t5aa"]
+[ext_resource type="PackedScene" uid="uid://cf80mkarve2it" path="res://Scenes/bullet.tscn" id="2_vgqql"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_8j6fj"]
 
@@ -78,10 +79,9 @@ _data = {
 &"block": SubResource("Animation_71te8")
 }
 
-[node name="player" type="CharacterBody3D" node_paths=PackedStringArray("DialogueGUI", "prompts", "camera")]
+[node name="player" type="CharacterBody3D" node_paths=PackedStringArray("camera")]
 script = ExtResource("1_cvnsp")
-DialogueGUI = NodePath("")
-prompts = NodePath("")
+bullet_scene = ExtResource("2_vgqql")
 camera = NodePath("Camera3D")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
@@ -94,6 +94,12 @@ transform = Transform3D(1, 0, 0, 0, 0.967612, 0.252441, 0, -0.252441, 0.967612, 
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.25, 0, 0)
 target_position = Vector3(0, 0, -5)
 collision_mask = 8
+
+[node name="Gun" type="Node3D" parent="Camera3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0882497, -0.0915132, -0.023875)
+metadata/_edit_group_ = true
+
+[node name="Muzzle" type="Marker3D" parent="Camera3D/Gun"]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("BoxMesh_728q4")
