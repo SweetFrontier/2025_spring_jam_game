@@ -1,11 +1,16 @@
 extends CharacterBody3D
 
-const SPEED = 6.0
-const SPRINT_ADDED_SPD = 6.0
+const SPEED = 20.0
+const SPRINT_ADDED_SPD = 12.0
 const JUMP_VELOCITY = 20
 const EXP_DECAY = 15.0;
 
-@onready var jumpsound = $jumpsound
+## TODO:
+# add power mechanic where battery goes up within @exported specified radius from origin
+# add shoot mechanic (left click) play $shootsound
+# power goes down when use sprint or shoot outside of radius from origin
+
+@onready var shootsound = $shootsound
 @onready var anim = $AnimationPlayer
 @onready var playerLookingAt = $Camera3D/playerLookingAt
 
@@ -50,7 +55,6 @@ func _physics_process(delta: float) -> void:
 	# Handle jump.
 	if Input.is_action_just_pressed("ui_accept") and is_on_floor() and !StopMoving:
 		velocity.y = JUMP_VELOCITY
-		jumpsound.play()
 
 	# Get the input direction and handle the movement/deceleration.
 	var input_dir := Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
