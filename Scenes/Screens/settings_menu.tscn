@@ -1,0 +1,359 @@
+[gd_scene load_steps=10 format=3 uid="uid://dsydmqi4so3oo"]
+
+[ext_resource type="Script" uid="uid://ci6d7gkbhgy33" path="res://Scripts/UI/settings_menu.gd" id="1_1rgiw"]
+[ext_resource type="FontFile" uid="uid://ulscv1lpl8mn" path="res://Art/Fonts/Questrial-Regular.ttf" id="2_kg5hr"]
+[ext_resource type="Texture2D" uid="uid://8k283uci1dtu" path="res://Art/UI/Pause/settings/menubutton.png" id="3_g64gj"]
+[ext_resource type="Texture2D" uid="uid://b62ibdupapsg0" path="res://Art/UI/Pause/settings/menubutton_selected.png" id="4_g8ys1"]
+[ext_resource type="Texture2D" uid="uid://cepp4vweg6274" path="res://Art/UI/Pause/settings/menucheckbox_full.png" id="4_g64gj"]
+[ext_resource type="Theme" uid="uid://c7cblyqea5is3" path="res://Art/UI/Themes/settings_menu.tres" id="5_167i8"]
+[ext_resource type="Texture2D" uid="uid://bkbplh30abm0b" path="res://Art/UI/Pause/settings/menucheckbox.png" id="5_g8ys1"]
+[ext_resource type="AudioStream" uid="uid://u1dcvopbll0h" path="res://Sounds/UI/button.wav" id="8_qer3s"]
+
+[sub_resource type="Theme" id="Theme_167i8"]
+CheckBox/icons/checked = ExtResource("4_g64gj")
+CheckBox/icons/unchecked = ExtResource("5_g8ys1")
+
+[node name="SettingsMenu" type="ColorRect" node_paths=PackedStringArray("pageButtons", "pages")]
+process_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 736.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(-736, 0)
+color = Color(0, 0, 0, 1)
+script = ExtResource("1_1rgiw")
+pageButtons = [NodePath("Buttons/Difficulty"), NodePath("Buttons/Audio"), NodePath("Buttons/Graphics")]
+pages = [NodePath("DifficultyOptions"), NodePath("AudioOptions"), NodePath("GraphicsOptions")]
+
+[node name="Settings" type="Label" parent="."]
+layout_mode = 0
+offset_left = -135.0
+offset_top = 11.0
+offset_right = 522.0
+offset_bottom = 171.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 40
+theme_override_fonts/font = ExtResource("2_kg5hr")
+theme_override_font_sizes/font_size = 141
+text = "SETTINGS"
+
+[node name="Buttons" type="Control" parent="."]
+anchors_preset = 0
+offset_left = -84.0
+offset_top = 159.0
+offset_right = 84.0
+offset_bottom = 396.0
+
+[node name="Difficulty" type="TextureButton" parent="Buttons"]
+z_index = -1
+z_as_relative = false
+custom_minimum_size = Vector2(168, 48)
+layout_mode = 2
+offset_right = 168.0
+offset_bottom = 48.0
+texture_normal = ExtResource("3_g64gj")
+texture_hover = ExtResource("4_g8ys1")
+texture_focused = ExtResource("4_g8ys1")
+ignore_texture_size = true
+stretch_mode = 4
+
+[node name="Label" type="Label" parent="Buttons/Difficulty"]
+z_as_relative = false
+layout_mode = 0
+offset_left = 3.0
+offset_top = 3.0
+offset_right = 165.0
+offset_bottom = 45.0
+theme_override_fonts/font = ExtResource("2_kg5hr")
+theme_override_font_sizes/font_size = 40
+text = "Difficulty"
+horizontal_alignment = 1
+
+[node name="Audio" type="TextureButton" parent="Buttons"]
+z_index = -1
+z_as_relative = false
+custom_minimum_size = Vector2(168, 48)
+layout_mode = 2
+offset_top = 63.0
+offset_right = 168.0
+offset_bottom = 111.0
+texture_normal = ExtResource("3_g64gj")
+texture_hover = ExtResource("4_g8ys1")
+texture_focused = ExtResource("4_g8ys1")
+ignore_texture_size = true
+stretch_mode = 4
+
+[node name="Label" type="Label" parent="Buttons/Audio"]
+z_as_relative = false
+layout_mode = 0
+offset_left = 3.0
+offset_top = 3.0
+offset_right = 165.0
+offset_bottom = 45.0
+theme_override_fonts/font = ExtResource("2_kg5hr")
+theme_override_font_sizes/font_size = 40
+text = "Audio"
+horizontal_alignment = 1
+
+[node name="Graphics" type="TextureButton" parent="Buttons"]
+z_as_relative = false
+custom_minimum_size = Vector2(168, 48)
+layout_mode = 2
+offset_left = -50.0
+offset_top = 126.0
+offset_right = 118.0
+offset_bottom = 174.0
+texture_normal = ExtResource("3_g64gj")
+texture_hover = ExtResource("4_g8ys1")
+texture_focused = ExtResource("4_g8ys1")
+ignore_texture_size = true
+stretch_mode = 4
+
+[node name="Label" type="Label" parent="Buttons/Graphics"]
+z_as_relative = false
+layout_mode = 0
+offset_left = 3.0
+offset_top = 3.0
+offset_right = 165.0
+offset_bottom = 45.0
+theme_override_fonts/font = ExtResource("2_kg5hr")
+theme_override_font_sizes/font_size = 40
+text = "Graphics"
+horizontal_alignment = 1
+
+[node name="Return" type="TextureButton" parent="Buttons"]
+z_index = -1
+z_as_relative = false
+custom_minimum_size = Vector2(168, 48)
+layout_mode = 2
+offset_top = 189.0
+offset_right = 168.0
+offset_bottom = 237.0
+texture_normal = ExtResource("3_g64gj")
+texture_hover = ExtResource("4_g8ys1")
+texture_focused = ExtResource("4_g8ys1")
+ignore_texture_size = true
+stretch_mode = 4
+
+[node name="Label" type="Label" parent="Buttons/Return"]
+z_as_relative = false
+layout_mode = 0
+offset_left = 3.0
+offset_top = 3.0
+offset_right = 165.0
+offset_bottom = 45.0
+theme_override_fonts/font = ExtResource("2_kg5hr")
+theme_override_font_sizes/font_size = 40
+text = "Return"
+horizontal_alignment = 1
+
+[node name="DifficultyOptions" type="ScrollContainer" parent="."]
+visible = false
+clip_contents = false
+layout_mode = 0
+offset_left = 113.0
+offset_top = 140.0
+offset_right = 915.0
+offset_bottom = 1300.0
+scale = Vector2(0.5, 0.5)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="DifficultyOptions"]
+layout_mode = 2
+
+[node name="Audio" type="Label" parent="DifficultyOptions/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 120
+text = "Difficulty"
+horizontal_alignment = 1
+
+[node name="HSeparator5" type="HSeparator" parent="DifficultyOptions/VBoxContainer"]
+modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 2
+
+[node name="None" type="Label" parent="DifficultyOptions/VBoxContainer"]
+custom_minimum_size = Vector2(802, 0)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_kg5hr")
+theme_override_font_sizes/font_size = 80
+text = "N/A  (sorry. no time.)"
+horizontal_alignment = 1
+
+[node name="AudioOptions" type="ScrollContainer" parent="."]
+visible = false
+clip_contents = false
+layout_mode = 0
+offset_left = 113.0
+offset_top = 140.0
+offset_right = 915.0
+offset_bottom = 1300.0
+scale = Vector2(0.5, 0.5)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="AudioOptions"]
+layout_mode = 2
+
+[node name="Audio" type="Label" parent="AudioOptions/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 120
+text = "Audio"
+horizontal_alignment = 1
+
+[node name="HSeparator5" type="HSeparator" parent="AudioOptions/VBoxContainer"]
+modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 2
+
+[node name="Music" type="Label" parent="AudioOptions/VBoxContainer"]
+custom_minimum_size = Vector2(802, 0)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_kg5hr")
+theme_override_font_sizes/font_size = 80
+text = "Music"
+horizontal_alignment = 1
+
+[node name="musicSlider" type="HSlider" parent="AudioOptions/VBoxContainer"]
+custom_minimum_size = Vector2(802, 0)
+layout_mode = 2
+theme = ExtResource("5_167i8")
+max_value = 1.0
+step = 0.01
+
+[node name="HSeparator4" type="HSeparator" parent="AudioOptions/VBoxContainer"]
+modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 2
+
+[node name="Sounds" type="Label" parent="AudioOptions/VBoxContainer"]
+custom_minimum_size = Vector2(802, 0)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_kg5hr")
+theme_override_font_sizes/font_size = 80
+text = "Sounds"
+horizontal_alignment = 1
+
+[node name="soundSlider" type="HSlider" parent="AudioOptions/VBoxContainer"]
+custom_minimum_size = Vector2(802, 0)
+layout_mode = 2
+theme = ExtResource("5_167i8")
+max_value = 1.0
+step = 0.01
+
+[node name="HSeparator" type="HSeparator" parent="AudioOptions/VBoxContainer"]
+modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 2
+
+[node name="GraphicsOptions" type="ScrollContainer" parent="."]
+clip_contents = false
+layout_mode = 0
+offset_left = 113.0
+offset_top = 140.0
+offset_right = 915.0
+offset_bottom = 1300.0
+scale = Vector2(0.5, 0.5)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="GraphicsOptions"]
+layout_mode = 2
+
+[node name="Graphics" type="Label" parent="GraphicsOptions/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 120
+text = "Graphics"
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="GraphicsOptions/VBoxContainer"]
+modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 2
+
+[node name="Frame Rate" type="Label" parent="GraphicsOptions/VBoxContainer"]
+custom_minimum_size = Vector2(802, 0)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_kg5hr")
+theme_override_font_sizes/font_size = 80
+text = "Frame Rate"
+horizontal_alignment = 1
+
+[node name="FrameRateOptions" type="OptionButton" parent="GraphicsOptions/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("5_167i8")
+theme_override_font_sizes/font_size = 40
+alignment = 1
+selected = 1
+item_count = 3
+popup/item_0/text = "30"
+popup/item_0/id = 0
+popup/item_1/text = "60"
+popup/item_1/id = 0
+popup/item_2/text = "120"
+popup/item_2/id = 0
+
+[node name="HSeparator2" type="HSeparator" parent="GraphicsOptions/VBoxContainer"]
+modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 2
+
+[node name="Fullscreen" type="CheckBox" parent="GraphicsOptions/VBoxContainer"]
+layout_mode = 2
+theme = SubResource("Theme_167i8")
+theme_override_fonts/font = ExtResource("2_kg5hr")
+theme_override_font_sizes/font_size = 80
+text = " Fullscreen"
+
+[node name="HSeparator3" type="HSeparator" parent="GraphicsOptions/VBoxContainer"]
+modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 2
+
+[node name="Vsync" type="CheckBox" parent="GraphicsOptions/VBoxContainer"]
+layout_mode = 2
+theme = SubResource("Theme_167i8")
+theme_override_fonts/font = ExtResource("2_kg5hr")
+theme_override_font_sizes/font_size = 80
+button_pressed = true
+text = " Vsync"
+
+[node name="HSeparator4" type="HSeparator" parent="GraphicsOptions/VBoxContainer"]
+modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 2
+
+[node name="AA" type="Label" parent="GraphicsOptions/VBoxContainer"]
+custom_minimum_size = Vector2(802, 0)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_kg5hr")
+theme_override_font_sizes/font_size = 80
+text = "Anti-Aliasing"
+horizontal_alignment = 1
+
+[node name="OptionAA" type="OptionButton" parent="GraphicsOptions/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("5_167i8")
+theme_override_font_sizes/font_size = 40
+alignment = 1
+selected = 0
+item_count = 5
+popup/item_0/text = "None"
+popup/item_0/id = 0
+popup/item_1/text = "MSAA x2 (cheapest)"
+popup/item_1/id = 1
+popup/item_2/text = "MSAA x4  (moderate)"
+popup/item_2/id = 2
+popup/item_3/text = "MSAA x8 (expensive)"
+popup/item_3/id = 3
+popup/item_4/text = "SSAA x8 (DEAR GOD)"
+popup/item_4/id = 4
+
+[node name="ButtonSounds" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_qer3s")
+bus = &"Sounds"
+
+[connection signal="pressed" from="Buttons/Return" to="." method="_on_return_pressed"]
+[connection signal="value_changed" from="AudioOptions/VBoxContainer/musicSlider" to="." method="_on_music_slider_value_changed"]
+[connection signal="value_changed" from="AudioOptions/VBoxContainer/soundSlider" to="." method="_on_sound_slider_value_changed"]
+[connection signal="item_selected" from="GraphicsOptions/VBoxContainer/FrameRateOptions" to="." method="framerate_selected"]
+[connection signal="toggled" from="GraphicsOptions/VBoxContainer/Fullscreen" to="." method="set_fullscreen"]
+[connection signal="toggled" from="GraphicsOptions/VBoxContainer/Vsync" to="." method="vsync_toggled"]
+[connection signal="item_selected" from="GraphicsOptions/VBoxContainer/OptionAA" to="." method="antialiasing_item_selected"]

@@ -1,0 +1,24 @@
+[gd_scene load_steps=3 format=3 uid="uid://sv04kbj4ks8h"]
+
+[ext_resource type="Texture2D" uid="uid://u1w8w2hw8ki3" path="res://Art/UI/TitleButtons/levelselect.png" id="1_iq6la"]
+[ext_resource type="Texture2D" uid="uid://c853q05ivrmgu" path="res://Art/UI/TitleButtons/levelselect_hover.png" id="2_j7lvc"]
+
+[node name="LevelButton" type="TextureButton"]
+offset_right = 40.0
+offset_bottom = 40.0
+texture_normal = ExtResource("1_iq6la")
+texture_hover = ExtResource("2_j7lvc")
+texture_focused = ExtResource("2_j7lvc")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 11.0
+offset_top = 10.0
+offset_right = 246.0
+offset_bottom = 223.0
+theme_override_colors/font_outline_color = Color(0, 0.233232, 0.496127, 1)
+theme_override_constants/outline_size = 25
+theme_override_font_sizes/font_size = 171
+text = "25"
+horizontal_alignment = 1
+vertical_alignment = 1

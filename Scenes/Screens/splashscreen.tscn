@@ -1,0 +1,93 @@
+[gd_scene load_steps=8 format=3 uid="uid://cacjeaj63ofv0"]
+
+[ext_resource type="VideoStream" path="res://Art/Splashscreen/Splashscreen.ogv" id="1_jkyml"]
+[ext_resource type="Script" path="res://Scripts/splashscreen.gd" id="1_s0hym"]
+[ext_resource type="PackedScene" uid="uid://bm67c4ebptsl8" path="res://Scenes/ScreenFx/Fader.tscn" id="3_4rorx"]
+[ext_resource type="AudioStream" uid="uid://wbk1fd68dwru" path="res://Sounds/UI/pressbutton.ogg" id="3_tggmv"]
+
+[sub_resource type="Animation" id="Animation_5k3gu"]
+resource_name = "skipAppear"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_sq7ib"]
+resource_name = "skipDisappear"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_pckcx"]
+_data = {
+"skipAppear": SubResource("Animation_5k3gu"),
+"skipDisappear": SubResource("Animation_sq7ib")
+}
+
+[node name="splashscreen" type="Control" node_paths=PackedStringArray("splashscreenVideo", "transitionToBlack", "buttonSound", "SkipButton")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_s0hym")
+splashscreenVideo = NodePath("VideoStreamPlayer")
+transitionToBlack = NodePath("Fader")
+buttonSound = NodePath("Fader/AudioStreamPlayer")
+SkipButton = NodePath("DoubleClick/MakeSkipAppear")
+
+[node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="."]
+texture_filter = 2
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stream = ExtResource("1_jkyml")
+volume_db = 2.0
+autoplay = true
+expand = true
+
+[node name="DoubleClick" type="Label" parent="."]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 0
+offset_left = 826.0
+offset_top = 622.0
+offset_right = 1204.0
+offset_bottom = 680.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 40
+text = "Double Click to Skip"
+
+[node name="MakeSkipAppear" type="AnimationPlayer" parent="DoubleClick"]
+libraries = {
+"": SubResource("AnimationLibrary_pckcx")
+}
+
+[node name="Fader" parent="." instance=ExtResource("3_4rorx")]
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Fader"]
+stream = ExtResource("3_tggmv")
+
+[connection signal="finished" from="VideoStreamPlayer" to="." method="_on_video_stream_player_finished"]

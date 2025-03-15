@@ -1,0 +1,114 @@
+[gd_scene load_steps=10 format=3 uid="uid://b6bgnigukck67"]
+
+[ext_resource type="Script" uid="uid://nv2oty0wji17" path="res://Scripts/player/character_body_3d.gd" id="1_cvnsp"]
+[ext_resource type="AudioStream" uid="uid://djgwmulqbi6kh" path="res://Sounds/player/jump.wav" id="2_6t5aa"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_8j6fj"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_728q4"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_pwrnl"]
+size = Vector3(1.2, 0.4, 1.2)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_p8180"]
+transparency = 1
+albedo_color = Color(0, 0.701, 0.809, 0.107)
+emission_enabled = true
+emission = Color(3.85046e-07, 0.860202, 0.853731, 1)
+emission_energy_multiplier = 5.36
+
+[sub_resource type="Animation" id="Animation_2m8e5"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("player/HeadBlock:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("player/HeadBlock:surface_material_override/0:albedo_color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 0.701, 0.809, 0.107)]
+}
+
+[sub_resource type="Animation" id="Animation_71te8"]
+resource_name = "block"
+length = 0.7
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("player/HeadBlock:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0333333, 0.7),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [false, true, false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("player/HeadBlock:surface_material_override/0:albedo_color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.7),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0, 0.701, 0.809, 0.107), Color(0, 0.701, 0.809, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_jobuo"]
+_data = {
+&"RESET": SubResource("Animation_2m8e5"),
+&"block": SubResource("Animation_71te8")
+}
+
+[node name="player" type="CharacterBody3D" node_paths=PackedStringArray("DialogueGUI", "prompts", "camera")]
+script = ExtResource("1_cvnsp")
+DialogueGUI = NodePath("")
+prompts = NodePath("")
+camera = NodePath("Camera3D")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_8j6fj")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.967612, 0.252441, 0, -0.252441, 0.967612, 0.5, 0.222425, -0.14535)
+
+[node name="playerLookingAt" type="RayCast3D" parent="Camera3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.25, 0, 0)
+target_position = Vector3(0, 0, -5)
+collision_mask = 8
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_728q4")
+
+[node name="jumpsound" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("2_6t5aa")
+
+[node name="HeadBlock" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.335827, 0)
+visible = false
+mesh = SubResource("BoxMesh_pwrnl")
+surface_material_override/0 = SubResource("StandardMaterial3D_p8180")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+root_node = NodePath("../..")
+libraries = {
+&"": SubResource("AnimationLibrary_jobuo")
+}

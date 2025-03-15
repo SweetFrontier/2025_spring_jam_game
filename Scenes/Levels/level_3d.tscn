@@ -1,0 +1,492 @@
+[gd_scene load_steps=48 format=3 uid="uid://cyncv16g58sew"]
+
+[ext_resource type="Shader" uid="uid://db4wfleksuqbn" path="res://Scripts/shaders/layered_scrolling.gdshader" id="1_1jmas"]
+[ext_resource type="Script" uid="uid://nv2oty0wji17" path="res://Scripts/player/character_body_3d.gd" id="1_8v0jy"]
+[ext_resource type="PackedScene" uid="uid://bm67c4ebptsl8" path="res://Scenes/ScreenFx/Fader.tscn" id="1_fwxpc"]
+[ext_resource type="Script" uid="uid://cfnxorq31tc57" path="res://Scripts/PauseMenu.gd" id="2_hmlci"]
+[ext_resource type="AudioStream" uid="uid://djgwmulqbi6kh" path="res://Sounds/player/jump.wav" id="2_owbax"]
+[ext_resource type="Script" uid="uid://wbgoiodm8v54" path="res://Scripts/npc/npc.gd" id="3_ohxsp"]
+[ext_resource type="AudioStream" uid="uid://u1dcvopbll0h" path="res://Sounds/UI/button.wav" id="4_46s56"]
+[ext_resource type="Script" uid="uid://cgmy1ler11cs2" path="res://Scripts/UI/dialogue.gd" id="5_aoqe4"]
+[ext_resource type="FontFile" uid="uid://cvaeo14ebg4he" path="res://Art/Fonts/Headlines-Bold.otf" id="6_kqgk0"]
+[ext_resource type="Texture2D" uid="uid://10oeumw5ttq1" path="res://Art/UI/Pause/main/settings.png" id="7_dysjn"]
+[ext_resource type="FontFile" uid="uid://ulscv1lpl8mn" path="res://Art/Fonts/Questrial-Regular.ttf" id="7_lqf36"]
+[ext_resource type="Texture2D" uid="uid://b1ogy1scrgwfh" path="res://Art/UI/Pause/main/exit.png" id="8_6g74i"]
+[ext_resource type="Texture2D" uid="uid://dgmqfi0umiy4d" path="res://Art/UI/Pause/main/resume.png" id="8_6h4rn"]
+[ext_resource type="Texture2D" uid="uid://clwokwkiuel0w" path="res://Art/UI/Pause/main/settingsSelected.png" id="8_kpvag"]
+[ext_resource type="Texture2D" uid="uid://bjwqdw4oscb4g" path="res://Art/UI/Pause/main/exitSelected.png" id="9_7btrr"]
+[ext_resource type="Texture2D" uid="uid://bok8lkcpc4r30" path="res://Art/UI/Pause/main/resumeSelected.png" id="9_j0866"]
+[ext_resource type="Texture2D" uid="uid://bouqbi02sddbi" path="res://Art/Sprites/collectibles/gem.png" id="9_lqf36"]
+[ext_resource type="Shader" uid="uid://8ctscwr4hx5e" path="res://Scripts/shaders/transperifyUI.gdshader" id="10_6g74i"]
+[ext_resource type="PackedScene" uid="uid://dsydmqi4so3oo" path="res://Scenes/Screens/settings_menu.tscn" id="12_7btrr"]
+[ext_resource type="Script" uid="uid://ctn75mxl2pfnp" path="res://Scripts/UI/rescaling_subviewport.gd" id="12_cwqbc"]
+[ext_resource type="AudioStream" uid="uid://dwo6p8usgr6ct" path="res://Sounds/Music/earlylevel.ogg" id="15_djbm0"]
+
+[sub_resource type="Gradient" id="Gradient_46s56"]
+offsets = PackedFloat32Array(0, 0.234234, 0.432432, 1)
+colors = PackedColorArray(0, 0, 0, 0.580392, 1, 1, 1, 1, 0, 0, 0, 0.580392, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_p7efm"]
+gradient = SubResource("Gradient_46s56")
+width = 16
+
+[sub_resource type="Gradient" id="Gradient_1jmas"]
+offsets = PackedFloat32Array(0, 0.39196, 1)
+colors = PackedColorArray(0, 0, 0, 1, 0.592965, 0.592965, 0.592965, 1, 1, 1, 1, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_fls4x"]
+noise_type = 2
+fractal_octaves = 1
+cellular_jitter = 0.0
+cellular_return_type = 0
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_hmlci"]
+generate_mipmaps = false
+seamless_blend_skirt = 0.0
+color_ramp = SubResource("Gradient_1jmas")
+noise = SubResource("FastNoiseLite_fls4x")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_fls4x"]
+shader = ExtResource("1_1jmas")
+shader_parameter/texture = SubResource("NoiseTexture2D_hmlci")
+shader_parameter/num_directions = 5
+shader_parameter/directions = PackedVector3Array(-0.01, -0.04, 1, 0.02, -0.05, 3, -0.001, -0.01, 1.1, 0.006, -0.02, 1.2, -0.02, -0.04, 2.4)
+shader_parameter/transparency = Vector4(1, 1, 1, 0.5)
+shader_parameter/lightAsTransparency = true
+shader_parameter/skewAmt = 0.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_6g74i"]
+shader = ExtResource("10_6g74i")
+shader_parameter/howTransparent = 0.5
+shader_parameter/threshold = 0.2
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_qqrk2"]
+sky_top_color = Color(0.937512, 0.176287, 3.85046e-07, 1)
+sky_horizon_color = Color(5.58317e-06, 0.847629, 0.507485, 1)
+sky_curve = 0.219613
+ground_curve = 0.101965
+
+[sub_resource type="Sky" id="Sky_bneoe"]
+sky_material = SubResource("ProceduralSkyMaterial_qqrk2")
+
+[sub_resource type="Environment" id="Environment_3chww"]
+background_mode = 2
+sky = SubResource("Sky_bneoe")
+ambient_light_color = Color(0.808998, 0.808998, 0.808998, 1)
+glow_normalized = true
+glow_intensity = 8.0
+glow_blend_mode = 1
+glow_hdr_threshold = 4.0
+glow_hdr_scale = 0.96
+glow_hdr_luminance_cap = 256.0
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_txat0"]
+
+[sub_resource type="Gradient" id="Gradient_t7kjs"]
+offsets = PackedFloat32Array(0, 0.0837989, 0.357542, 1)
+colors = PackedColorArray(0, 0, 0, 1, 0.319832, 0.449825, 1.05888e-06, 1, 0.199102, 0.514209, 0.101676, 1, 0.0823529, 0.576471, 0.2, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_7d27r"]
+seed = 35
+frequency = 1.0
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_lvvh8"]
+color_ramp = SubResource("Gradient_t7kjs")
+noise = SubResource("FastNoiseLite_7d27r")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_aq8hl"]
+albedo_color = Color(1.49205e-06, 0.516031, 0.15776, 1)
+albedo_texture = SubResource("NoiseTexture2D_lvvh8")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_o0psa"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_8j6fj"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_ohxsp"]
+radius = 0.1
+
+[sub_resource type="BoxMesh" id="BoxMesh_728q4"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_pwrnl"]
+size = Vector3(1.2, 0.4, 1.2)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_p8180"]
+transparency = 1
+albedo_color = Color(0, 0.701, 0.809, 0.107)
+emission_enabled = true
+emission = Color(3.85046e-07, 0.860202, 0.853731, 1)
+emission_energy_multiplier = 5.36
+
+[sub_resource type="Animation" id="Animation_2m8e5"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("player/HeadBlock:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("player/HeadBlock:surface_material_override/0:albedo_color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 0.701, 0.809, 0.107)]
+}
+
+[sub_resource type="Animation" id="Animation_71te8"]
+resource_name = "block"
+length = 0.7
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("player/HeadBlock:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0333333, 0.7),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [false, true, false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("player/HeadBlock:surface_material_override/0:albedo_color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.7),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0, 0.701, 0.809, 0.107), Color(0, 0.701, 0.809, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_jobuo"]
+_data = {
+&"RESET": SubResource("Animation_2m8e5"),
+&"block": SubResource("Animation_71te8")
+}
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_rj5fx"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cw2gn"]
+albedo_color = Color(0.60093, 0, 0.12487, 1)
+roughness = 0.04
+
+[node name="3D Scene" type="Node3D"]
+
+[node name="Fader" parent="." instance=ExtResource("1_fwxpc")]
+
+[node name="MenuOverlay" type="CanvasLayer" parent="."]
+
+[node name="prompts" type="Node2D" parent="MenuOverlay"]
+visible = false
+
+[node name="Label" type="Label" parent="MenuOverlay/prompts"]
+offset_left = 735.0
+offset_top = 196.0
+offset_right = 834.0
+offset_bottom = 307.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 30
+theme_override_font_sizes/font_size = 81
+text = "[E]"
+
+[node name="Dialogue" type="ColorRect" parent="MenuOverlay" node_paths=PackedStringArray("root", "player")]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 465.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.580392)
+script = ExtResource("5_aoqe4")
+root = NodePath("../..")
+player = NodePath("../../player")
+
+[node name="Name" type="Label" parent="MenuOverlay/Dialogue"]
+layout_mode = 0
+offset_left = 1.0
+offset_top = -8.0
+offset_right = 252.0
+offset_bottom = 60.0
+theme_override_fonts/font = ExtResource("6_kqgk0")
+theme_override_font_sizes/font_size = 48
+text = "Name"
+horizontal_alignment = 1
+
+[node name="Text" type="RichTextLabel" parent="MenuOverlay/Dialogue"]
+layout_mode = 0
+offset_left = 254.0
+offset_top = 16.0
+offset_right = 1218.0
+offset_bottom = 254.0
+theme_override_fonts/normal_font = ExtResource("7_lqf36")
+theme_override_font_sizes/normal_font_size = 48
+text = "example text here asdfjklasdfjkladsfjkl asdfjklasdf"
+visible_characters = 43
+visible_characters_behavior = 1
+visible_ratio = 0.862745
+
+[node name="TopFadePart" type="TextureRect" parent="MenuOverlay/Dialogue"]
+layout_mode = 0
+offset_right = 16.0
+offset_bottom = 1280.0
+rotation = -1.5708
+texture = SubResource("GradientTexture1D_p7efm")
+
+[node name="Triangle" type="TextureRect" parent="MenuOverlay/Dialogue"]
+visible = false
+texture_filter = 1
+layout_mode = 0
+offset_left = 1237.0
+offset_top = 94.0
+offset_right = 1269.0
+offset_bottom = 126.0
+texture = ExtResource("9_lqf36")
+
+[node name="PauseMenu" type="Control" parent="MenuOverlay" node_paths=PackedStringArray("Fader", "mainPauseMenu", "settingsMenu", "settingsDisplay")]
+process_mode = 3
+visible = false
+texture_filter = 1
+material = SubResource("ShaderMaterial_fls4x")
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("2_hmlci")
+Fader = NodePath("../../Fader")
+mainPauseMenu = NodePath("MainPauseMenu")
+settingsMenu = NodePath("SettingsMenu/SettingsSubviewport/SettingsMenu")
+settingsDisplay = NodePath("SettingsMenu")
+
+[node name="focusDummy" type="Control" parent="MenuOverlay/PauseMenu"]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath(".")
+focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath(".")
+focus_next = NodePath(".")
+focus_previous = NodePath(".")
+focus_mode = 2
+
+[node name="MainPauseMenu" type="ColorRect" parent="MenuOverlay/PauseMenu"]
+process_mode = 3
+material = SubResource("ShaderMaterial_fls4x")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0.826765, 0.99335, 1)
+
+[node name="Paused" type="Label" parent="MenuOverlay/PauseMenu/MainPauseMenu"]
+texture_filter = 2
+layout_mode = 0
+offset_left = 399.0
+offset_top = 32.0
+offset_right = 881.0
+offset_bottom = 192.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0.880494, 0.880497, 0.880496, 1)
+theme_override_constants/outline_size = 35
+theme_override_fonts/font = ExtResource("7_lqf36")
+theme_override_font_sizes/font_size = 141
+text = "Paused"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MenuOverlay/PauseMenu/MainPauseMenu"]
+layout_mode = 0
+offset_left = 484.0
+offset_top = 213.0
+offset_right = 796.0
+offset_bottom = 373.0
+
+[node name="Resume" type="TextureButton" parent="MenuOverlay/PauseMenu/MainPauseMenu/VBoxContainer"]
+custom_minimum_size = Vector2(312, 92)
+layout_mode = 2
+texture_normal = ExtResource("8_6h4rn")
+texture_hover = ExtResource("9_j0866")
+texture_focused = ExtResource("9_j0866")
+stretch_mode = 4
+
+[node name="Settings" type="TextureButton" parent="MenuOverlay/PauseMenu/MainPauseMenu/VBoxContainer"]
+custom_minimum_size = Vector2(312, 92)
+layout_mode = 2
+texture_normal = ExtResource("7_dysjn")
+texture_hover = ExtResource("8_kpvag")
+texture_focused = ExtResource("8_kpvag")
+stretch_mode = 4
+
+[node name="Exit To Menu" type="TextureButton" parent="MenuOverlay/PauseMenu/MainPauseMenu/VBoxContainer"]
+custom_minimum_size = Vector2(312, 92)
+layout_mode = 2
+texture_normal = ExtResource("8_6g74i")
+texture_hover = ExtResource("9_7btrr")
+texture_focused = ExtResource("9_7btrr")
+stretch_mode = 4
+
+[node name="ButtonSound" type="AudioStreamPlayer" parent="MenuOverlay/PauseMenu"]
+stream = ExtResource("4_46s56")
+
+[node name="SettingsMenu" type="SubViewportContainer" parent="MenuOverlay/PauseMenu"]
+visible = false
+material = SubResource("ShaderMaterial_6g74i")
+layout_mode = 0
+offset_right = 1280.0
+offset_bottom = 720.0
+stretch = true
+
+[node name="SettingsSubviewport" type="SubViewport" parent="MenuOverlay/PauseMenu/SettingsMenu"]
+transparent_bg = true
+handle_input_locally = false
+size = Vector2i(1280, 720)
+render_target_update_mode = 0
+script = ExtResource("12_cwqbc")
+
+[node name="SettingsMenu" parent="MenuOverlay/PauseMenu/SettingsMenu/SettingsSubviewport" instance=ExtResource("12_7btrr")]
+visible = false
+
+[node name="ColorRect" type="ColorRect" parent="MenuOverlay"]
+offset_right = 64.0
+offset_bottom = 64.0
+
+[node name="GUI" type="CanvasLayer" parent="."]
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+process_mode = 3
+stream = ExtResource("15_djbm0")
+autoplay = true
+bus = &"Music"
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_3chww")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -0.656731, 0.754125, 0, -0.754125, -0.656731, 0, 9.07402, 0)
+light_color = Color(5.58317e-06, 0.876114, 0.843211, 1)
+light_energy = 2.18
+shadow_enabled = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(71.265, 0, 0, 0, 71.265, 0, 0, 0, 71.265, 0, -0.257568, 0)
+mesh = SubResource("PlaneMesh_txat0")
+skeleton = NodePath("")
+surface_material_override/0 = SubResource("StandardMaterial3D_aq8hl")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D"]
+collision_layer = 17
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+shape = SubResource("BoxShape3D_o0psa")
+
+[node name="player" type="CharacterBody3D" parent="." node_paths=PackedStringArray("DialogueGUI", "prompts")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.86734, 0)
+script = ExtResource("1_8v0jy")
+DialogueGUI = NodePath("../MenuOverlay/Dialogue")
+prompts = NodePath("../MenuOverlay/prompts")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="player"]
+shape = SubResource("BoxShape3D_8j6fj")
+
+[node name="campivot" type="Node3D" parent="player"]
+transform = Transform3D(1, 0, 0, 0, 0.967612, 0.252441, 0, -0.252441, 0.967612, 0, 2.38419e-07, -4.76837e-07)
+
+[node name="SpringArm3D" type="SpringArm3D" parent="player/campivot"]
+transform = Transform3D(1, 0, 0, 0, 1, 1.49012e-08, 0, -1.49012e-08, 1, 0.5, 0.577, 0)
+collision_mask = 16
+shape = SubResource("SphereShape3D_ohxsp")
+spring_length = 4.0
+
+[node name="Camera3D" type="Camera3D" parent="player/campivot/SpringArm3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.000196457, 0.000370264)
+
+[node name="playerLookingAt" type="RayCast3D" parent="player/campivot/SpringArm3D/Camera3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.25, 0, 0)
+target_position = Vector3(0, 0, -5)
+collision_mask = 8
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="player"]
+mesh = SubResource("BoxMesh_728q4")
+
+[node name="jumpsound" type="AudioStreamPlayer3D" parent="player"]
+stream = ExtResource("2_owbax")
+
+[node name="HeadBlock" type="MeshInstance3D" parent="player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.335827, 0)
+visible = false
+mesh = SubResource("BoxMesh_pwrnl")
+surface_material_override/0 = SubResource("StandardMaterial3D_p8180")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="player"]
+root_node = NodePath("../..")
+libraries = {
+&"": SubResource("AnimationLibrary_jobuo")
+}
+
+[node name="Frend" type="CharacterBody3D" parent="." groups=["npc"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.263186, -12.2064)
+collision_layer = 9
+script = ExtResource("3_ohxsp")
+my_name = "Friend"
+dialogue = Array[String](["Hello friend.\\
+I'm not sure what brings you here, but it's nice to meet you.\\
+uwu."])
+repeatDialogue = Array[String](["Oh, what's that? You want me to repeat myself?\\
+Okay,", "You want me to repeat myself again?\\
+Okay, ", "Really? Again?", "You sure you don't need your ears checked?
+I repeat.", "MAYBE YOU'LL HEAR ME PROPERLY IF I SHOUT\\
+I REPEAT:\\
+{CAP}", "I SAID:\\
+{CAP}"])
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Frend"]
+shape = SubResource("BoxShape3D_rj5fx")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Frend"]
+mesh = SubResource("BoxMesh_728q4")
+surface_material_override/0 = SubResource("StandardMaterial3D_cw2gn")
+
+[node name="Frend2" type="CharacterBody3D" parent="." groups=["npc"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.55853, 0.263186, -12.2064)
+collision_layer = 9
+script = ExtResource("3_ohxsp")
+my_name = "Meaney"
+dialogue = Array[String](["Hello there my good cube.\\
+What a fine day we are having, although by we of course I mean I am having. I'm not particularly sure about yours.\\
+How is your day going, by the way?
+No need to answer, of course, but I like to maintain appearances.\\
+If that's all, then good day to you."])
+repeatDialogue = Array[String](["Didn't get that?\\
+Okay, I repeat:\\
+{CAP}", "{CAP}"])
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Frend2"]
+shape = SubResource("BoxShape3D_rj5fx")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Frend2"]
+mesh = SubResource("BoxMesh_728q4")
+surface_material_override/0 = SubResource("StandardMaterial3D_cw2gn")
+
+[node name="LightmapGI" type="LightmapGI" parent="."]
+
+[connection signal="pressed" from="MenuOverlay/PauseMenu/MainPauseMenu/VBoxContainer/Resume" to="MenuOverlay/PauseMenu" method="togglePause"]
+[connection signal="pressed" from="MenuOverlay/PauseMenu/MainPauseMenu/VBoxContainer/Settings" to="MenuOverlay/PauseMenu" method="_on_settings_pressed"]
+[connection signal="pressed" from="MenuOverlay/PauseMenu/MainPauseMenu/VBoxContainer/Exit To Menu" to="MenuOverlay/PauseMenu" method="_on_quit_button_pressed"]
