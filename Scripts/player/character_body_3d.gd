@@ -6,9 +6,23 @@ const JUMP_VELOCITY = 20
 const EXP_DECAY = 15.0;
 
 @export var bullet_scene: PackedScene
-@export var fire_rate: float = 0.2
+
+@export var initialFireRate: float = 0.2
+@export var upgradedFireRate: float = 0.1
 @export var spread_amount: float = 6.0  # Degrees of variation
+var fireRate: float
 var can_shoot = true
+
+@export var MaxEnergy: float = 100
+@export var Energy: float = 100
+@export var initialPerShotEnergy: float = 1
+@export var upgradedPerShotEnergy: float = 0.5
+@export var initialPerSecSprintEnergy: float = 5
+@export var upgradedPerSecSprintEnergy: float = 2.5
+var perShotEnergy: float
+var perSecSprintEnergy: float
+
+var applied_upgrades: Dictionary = {}
 ## TODO:
 # add power mechanic where battery goes up within @exported specified radius from origin
 # add shoot mechanic (left click) play $shootsound
@@ -30,6 +44,10 @@ var interactive_element_selected : Node3D = null
 
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	perShotEnergy = initialPerShotEnergy
+	perSecSprintEnergy = initialPerSecSprintEnergy
+	fireRate = initialFireRate
+	upgrade(Upgrade.REDUCESHOTENERGY)
 
 # Handle Inputs
 func _input(event):
@@ -63,7 +81,11 @@ func _physics_process(delta: float) -> void:
 	# Get the input direction and handle the movement/deceleration.
 	var input_dir := Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
 	var direction := (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
-	var sprint : int = SPRINT_ADDED_SPD if Input.is_action_pressed("sprint") else 0
+	var sprint : int = 0
+	if Input.is_action_pressed("sprint") and Energy >= perSecSprintEnergy * delta:
+		sprint = SPRINT_ADDED_SPD
+		Energy -= perSecSprintEnergy * delta
+		print("Energy Remaining: ", Energy)
 	if !StopMoving and direction:
 		velocity.x = expDecay(velocity.x, direction.x * (SPEED + sprint), EXP_DECAY, delta)
 		velocity.z = expDecay(velocity.z, direction.z * (SPEED + sprint), EXP_DECAY, delta)
@@ -75,10 +97,12 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 
 func _process(_delta: float) -> void:
-	if Input.is_action_pressed("shoot") and can_shoot:
+	if Input.is_action_pressed("shoot") and Energy > perShotEnergy and can_shoot:
+		Energy -= perShotEnergy
+		print("Energy Remaining: ", Energy)
 		shoot()
 		can_shoot = false
-		await get_tree().create_timer(fire_rate).timeout
+		await get_tree().create_timer(fireRate).timeout
 		can_shoot = true
 	if (StopMoving): return
 	if (playerLookingAt.is_colliding()):
@@ -113,5 +137,21 @@ func shoot():
 func expDecay(a, b, decay, dt):
 	return b+(a-b)*exp(-decay*dt)
 
+func upgrade(upgradeType: Upgrade):
+	if upgradeType in applied_upgrades:
+		print_debug("Upgrade already applied:", upgradeType)
+		return  # Prevent reapplying the same upgrade
+		
+	# Apply effects based on the upgrade
+	match upgradeType:
+		Upgrade.REDUCESHOTENERGY:
+			perShotEnergy = upgradedPerShotEnergy
+		Upgrade.REDUCESPRINTENERGY:
+			perSecSprintEnergy = upgradedPerSecSprintEnergy
+		Upgrade.INCREASEFIRERATE:
+			initialFireRate = upgradedFireRate
+
 func dead():
 	position = Vector3.ZERO
+
+enum Upgrade {REDUCESHOTENERGY, REDUCESPRINTENERGY, INCREASEFIRERATE}

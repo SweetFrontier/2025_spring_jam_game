@@ -1,6 +1,6 @@
 extends RigidBody3D
 
-@export var speed: float = 40.0
+@export var speed: float = 60.0
 @export var lifetime: float = 5.0  # Bullet disappears after 5 seconds
 
 var direction = Vector3.ZERO
