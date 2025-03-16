@@ -38,7 +38,7 @@ func playButtonPressed():
 		buttonSound.play()
 		Fader.play("FadeOut")
 		await Fader.animation_finished
-		get_tree().change_scene_to_file("res://Scenes/Levels/level_3d.tscn")
+		get_tree().change_scene_to_file("res://Scenes/Levels/level_bad.tscn")
 
 func levelSelectPressed():
 	$maintitle.hide()

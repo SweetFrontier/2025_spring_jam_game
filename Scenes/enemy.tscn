@@ -1,0 +1,36 @@
+[gd_scene load_steps=5 format=3 uid="uid://dltpp7i68arj2"]
+
+[ext_resource type="Script" uid="uid://c61jpikv5uml3" path="res://Scripts/enemy.gd" id="1_hghv2"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ja1cu"]
+radius = 0.551457
+height = 1.94279
+
+[sub_resource type="BoxMesh" id="BoxMesh_728q4"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cw2gn"]
+albedo_color = Color(0.60093, 0, 0.12487, 1)
+roughness = 0.04
+
+[node name="enemy" type="CharacterBody3D" groups=["enemies"]]
+transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 0, 0, 0)
+collision_layer = 3
+collision_mask = 3
+script = ExtResource("1_hghv2")
+speed = 5
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.285095)
+shape = SubResource("CapsuleShape3D_ja1cu")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_728q4")
+surface_material_override/0 = SubResource("StandardMaterial3D_cw2gn")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.731497, 0, 0.681845, 0, 1, 0, -0.681845, 0, 0.731497, 0, 0, 0.36378)
+mesh = SubResource("BoxMesh_728q4")
+surface_material_override/0 = SubResource("StandardMaterial3D_cw2gn")
+
+[node name="sounds" type="AudioStreamPlayer3D" parent="."]
+transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0, 0, 0.285095)

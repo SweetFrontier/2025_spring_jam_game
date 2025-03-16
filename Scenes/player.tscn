@@ -1,12 +1,12 @@
-[gd_scene load_steps=11 format=3 uid="uid://b6bgnigukck67"]
+[gd_scene load_steps=10 format=3 uid="uid://b6bgnigukck67"]
 
 [ext_resource type="Script" uid="uid://nv2oty0wji17" path="res://Scripts/player/character_body_3d.gd" id="1_cvnsp"]
-[ext_resource type="AudioStream" uid="uid://djgwmulqbi6kh" path="res://Sounds/player/jump.wav" id="2_6t5aa"]
-[ext_resource type="PackedScene" uid="uid://cf80mkarve2it" path="res://Scenes/bullet.tscn" id="2_vgqql"]
+[ext_resource type="PackedScene" uid="uid://ewleqkurq0gn" path="res://Scenes/bullet.tscn" id="2_vgqql"]
+[ext_resource type="AudioStream" uid="uid://dkuh6y46a2i25" path="res://Sounds/player/shoot.ogg" id="3_6t5aa"]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_8j6fj"]
-
-[sub_resource type="BoxMesh" id="BoxMesh_728q4"]
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_grrho"]
+radius = 1.65704
+height = 8.2092
 
 [sub_resource type="BoxMesh" id="BoxMesh_pwrnl"]
 size = Vector3(1.2, 0.4, 1.2)
@@ -82,13 +82,16 @@ _data = {
 [node name="player" type="CharacterBody3D" node_paths=PackedStringArray("camera")]
 script = ExtResource("1_cvnsp")
 bullet_scene = ExtResource("2_vgqql")
+spread_amount = 1.0
+rechargeRadius = 10.0
 camera = NodePath("Camera3D")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-shape = SubResource("BoxShape3D_8j6fj")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.377005, 0)
+shape = SubResource("CapsuleShape3D_grrho")
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.967612, 0.252441, 0, -0.252441, 0.967612, 0.5, 0.222425, -0.14535)
+transform = Transform3D(1, 0, 0, 0, 0.967612, 0.252441, 0, -0.252441, 0.967612, 0.5, 2.18714, -0.14535)
 
 [node name="playerLookingAt" type="RayCast3D" parent="Camera3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.25, 0, 0)
@@ -96,16 +99,13 @@ target_position = Vector3(0, 0, -5)
 collision_mask = 8
 
 [node name="Gun" type="Node3D" parent="Camera3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0882497, -0.0915132, -0.023875)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.532966, -0.71869, -0.647327)
 metadata/_edit_group_ = true
 
 [node name="Muzzle" type="Marker3D" parent="Camera3D/Gun"]
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-mesh = SubResource("BoxMesh_728q4")
-
-[node name="jumpsound" type="AudioStreamPlayer3D" parent="."]
-stream = ExtResource("2_6t5aa")
+[node name="shootsound" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("3_6t5aa")
 
 [node name="HeadBlock" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.335827, 0)

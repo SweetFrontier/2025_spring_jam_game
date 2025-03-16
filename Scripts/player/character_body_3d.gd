@@ -5,6 +5,7 @@ const SPRINT_ADDED_SPD = 12.0
 const JUMP_VELOCITY = 20
 const EXP_DECAY = 15.0;
 
+@export_subgroup("Bullets and Energy")
 @export var bullet_scene: PackedScene
 
 @export var initialFireRate: float = 0.2
@@ -15,6 +16,7 @@ var can_shoot = true
 
 @export var MaxEnergy: float = 100
 @export var Energy: float = 100
+@export var rechargeRadius : float = 1.5
 @export var initialPerShotEnergy: float = 1
 @export var upgradedPerShotEnergy: float = 0.5
 @export var initialPerSecSprintEnergy: float = 5
@@ -23,10 +25,12 @@ var perShotEnergy: float
 var perSecSprintEnergy: float
 
 var applied_upgrades: Dictionary = {}
-## TODO:
-# add power mechanic where battery goes up within @exported specified radius from origin
-# add shoot mechanic (left click) play $shootsound
-# power goes down when use sprint or shoot outside of radius from origin
+
+@export_subgroup("HUD and GUI")
+@export var hudBattery : AnimatedSprite2D
+@export var hudPercent : Label
+@export var hudCharging : TextureRect
+
 
 @onready var shootsound = $shootsound
 @onready var anim = $AnimationPlayer
@@ -47,6 +51,8 @@ func _ready():
 	perShotEnergy = initialPerShotEnergy
 	perSecSprintEnergy = initialPerSecSprintEnergy
 	fireRate = initialFireRate
+	
+	update_hud()
 
 # Handle Inputs
 func _input(event):
@@ -84,7 +90,7 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_pressed("sprint") and Energy >= perSecSprintEnergy * delta:
 		sprint = SPRINT_ADDED_SPD
 		Energy -= perSecSprintEnergy * delta
-		print("Energy Remaining: ", Energy)
+		update_hud()
 	if !StopMoving and direction:
 		velocity.x = expDecay(velocity.x, direction.x * (SPEED + sprint), EXP_DECAY, delta)
 		velocity.z = expDecay(velocity.z, direction.z * (SPEED + sprint), EXP_DECAY, delta)
@@ -94,11 +100,18 @@ func _physics_process(delta: float) -> void:
 	
 	# move and slide
 	move_and_slide()
+	
+	# recharge
+	if (global_position.distance_to(Vector3.ZERO) < rechargeRadius):
+		Energy = min(Energy+delta*8, 100)
+		update_hud()
+		hudCharging.show()
+	else: hudCharging.hide()
 
 func _process(_delta: float) -> void:
 	if Input.is_action_pressed("shoot") and Energy > perShotEnergy and can_shoot:
 		Energy -= perShotEnergy
-		print("Energy Remaining: ", Energy)
+		update_hud()
 		shoot()
 		can_shoot = false
 		await get_tree().create_timer(fireRate).timeout
@@ -121,6 +134,9 @@ func freeze(freeze : bool):
 
 func shoot():
 	if bullet_scene:
+		# play shoot sound
+		shootsound.play()
+		# make bullet
 		var bullet = bullet_scene.instantiate()
 		bullet.global_transform = $Camera3D/Gun/Muzzle.global_transform  # Spawn at muzzle position
 		
@@ -152,5 +168,9 @@ func upgrade(upgradeType: Upgrade):
 
 func dead():
 	position = Vector3.ZERO
+
+func update_hud():
+	hudBattery.play(str(25*clamp(int(round(Energy/25)), 0, 4)))
+	hudPercent.text = str(int(floor(Energy)))
 
 enum Upgrade {REDUCESHOTENERGY, REDUCESPRINTENERGY, INCREASEFIRERATE}

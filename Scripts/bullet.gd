@@ -12,5 +12,5 @@ func _ready():
 
 func _on_body_entered(body):
 	if body.is_in_group("enemies"):  
-		body.queue_free()  # Replace with damage logic if needed
-	queue_free()  # Destroy bullet on impact
+		body.damage(direction)
+		queue_free()  # Destroy bullet on impact

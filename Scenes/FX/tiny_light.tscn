@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3 uid="uid://b3qjnrjqnpqnd"]
+
+[ext_resource type="ArrayMesh" uid="uid://cvqu0pklhgc5n" path="res://Art/Models/light_Cylinder.res" id="1_sn5xc"]
+
+[node name="TinyLight" type="OmniLight3D"]
+light_color = Color(1, 0.586637, 0.269787, 1)
+light_energy = 16.0
+light_indirect_energy = 2.0
+light_bake_mode = 1
+omni_range = 30.8731
+
+[node name="LightCylinder" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.42002, 0)
+mesh = ExtResource("1_sn5xc")

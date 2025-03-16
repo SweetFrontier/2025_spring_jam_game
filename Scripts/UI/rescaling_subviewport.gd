@@ -8,8 +8,8 @@ var within_the_viewport : Control
 func _ready():
 	root_viewport = get_tree().get_root().get_viewport()
 	root_viewport.connect("size_changed", _on_root_viewport_size_changed)
-	#get_tree().get_root().connect("size_changed", _on_root_viewport_size_changed)
 	within_the_viewport = get_child(0)
+	_on_root_viewport_size_changed()
 
 func _on_root_viewport_size_changed():
 	var root_size : Vector2 = root_viewport.size

@@ -1,13 +1,11 @@
-[gd_scene load_steps=32 format=3 uid="uid://bawhbhakk6q0"]
+[gd_scene load_steps=30 format=3 uid="uid://bawhbhakk6q0"]
 
 [ext_resource type="PackedScene" uid="uid://bm67c4ebptsl8" path="res://Scenes/ScreenFx/Fader.tscn" id="1_6rpfu"]
 [ext_resource type="Script" uid="uid://dkslg0mx1ah0g" path="res://Scripts/UI/TitleScreen.gd" id="1_68eqn"]
+[ext_resource type="Texture2D" uid="uid://bytxnag1rve2j" path="res://Art/UI/title.png" id="3_qq5ay"]
 [ext_resource type="Texture2D" uid="uid://h51717e4n5i" path="res://Art/UI/Play.png" id="5_qdvgj"]
-[ext_resource type="Texture2D" uid="uid://dn3m8yuk4lsxq" path="res://Art/UI/Select.png" id="6_3pf4f"]
 [ext_resource type="Texture2D" uid="uid://ckdsdu8f71hrp" path="res://Art/UI/PlayClick.png" id="6_6mgjc"]
 [ext_resource type="Texture2D" uid="uid://doua04qcaxxcr" path="res://Art/UI/PlayHover.png" id="7_50pjy"]
-[ext_resource type="Texture2D" uid="uid://fod2aydisn1a" path="res://Art/UI/SelectClic.png" id="7_gcsim"]
-[ext_resource type="Texture2D" uid="uid://doaktfdkde4of" path="res://Art/UI/SelectHov.png" id="8_7uh2j"]
 [ext_resource type="Script" uid="uid://dayf6n8y4iuvj" path="res://Scripts/UI/levelselect.gd" id="9_m2g0r"]
 [ext_resource type="AudioStream" uid="uid://b550nam8j715c" path="res://Sounds/Music/title.mp3" id="11_uqgl8"]
 [ext_resource type="Texture2D" uid="uid://dysppjh16i01u" path="res://Art/UI/Pause/Return.png" id="12_n2kjl"]
@@ -55,18 +53,6 @@ tracks/2/keys = {
 "update": 0,
 "values": [Vector2(533, 400)]
 }
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("maintitle/LevelSelectButton:position")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(471.5, 500)]
-}
 
 [sub_resource type="Animation" id="Animation_caa3g"]
 resource_name = "ShowTitle"
@@ -82,7 +68,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0.9, 2),
 "transitions": PackedFloat32Array(0.2, 1),
 "update": 0,
-"values": [Vector2(311, 1200), Vector2(311, 100)]
+"values": [Vector2(240, 1200), Vector2(240, 80)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -130,31 +116,7 @@ tracks/4/keys = {
 "times": PackedFloat32Array(1.05, 2),
 "transitions": PackedFloat32Array(0.3, 1),
 "update": 0,
-"values": [Vector2(533, 1200), Vector2(533, 300)]
-}
-tracks/5/type = "value"
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/path = NodePath("maintitle/LevelSelectButton:position")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/keys = {
-"times": PackedFloat32Array(1.35, 2),
-"transitions": PackedFloat32Array(0.2, 1),
-"update": 0,
-"values": [Vector2(471.5, 1280), Vector2(471.5, 450)]
-}
-tracks/6/type = "value"
-tracks/6/imported = false
-tracks/6/enabled = true
-tracks/6/path = NodePath("maintitle/LevelSelectButton:disabled")
-tracks/6/interp = 1
-tracks/6/loop_wrap = true
-tracks/6/keys = {
-"times": PackedFloat32Array(0, 1.9),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [true, false]
+"values": [Vector2(440, 1200), Vector2(440, 400)]
 }
 
 [sub_resource type="Animation" id="Animation_h3mb4"]
@@ -299,7 +261,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(6.83457e-06, 0.599165, 0.754681, 1)
+color = Color(0, 0, 0, 1)
 script = ExtResource("1_68eqn")
 musicFader = NodePath("MusicPlayer/MusicController")
 Fader = NodePath("Fader")
@@ -319,29 +281,25 @@ anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="Title" type="Label" parent="maintitle"]
+[node name="Title" type="TextureRect" parent="maintitle"]
 texture_filter = 2
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = 273.0
-offset_top = 91.0
-offset_right = 925.0
-offset_bottom = 264.0
+offset_left = 220.0
+offset_top = 80.0
+offset_right = 1020.0
+offset_bottom = 280.0
 grow_horizontal = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
-theme_override_constants/outline_size = 10
-theme_override_font_sizes/font_size = 90
-text = "3D GAME"
+texture = ExtResource("3_qq5ay")
 
 [node name="PlayButton" type="TextureButton" parent="maintitle"]
 layout_mode = 0
-offset_left = 533.0
-offset_top = 300.0
-offset_right = 746.0
-offset_bottom = 437.0
+offset_left = 440.0
+offset_top = 400.0
+offset_right = 840.0
+offset_bottom = 500.0
 focus_neighbor_left = NodePath("../SettingsButton")
 focus_neighbor_bottom = NodePath("../SettingsButton")
 texture_normal = ExtResource("5_qdvgj")
@@ -350,22 +308,7 @@ texture_hover = ExtResource("7_50pjy")
 texture_disabled = ExtResource("5_qdvgj")
 texture_focused = ExtResource("7_50pjy")
 ignore_texture_size = true
-stretch_mode = 1
-
-[node name="LevelSelectButton" type="TextureButton" parent="maintitle"]
-layout_mode = 0
-offset_left = 471.5
-offset_top = 450.002
-offset_right = 808.5
-offset_bottom = 587.002
-focus_neighbor_left = NodePath("../SettingsButton")
-focus_neighbor_bottom = NodePath("../SettingsButton")
-texture_normal = ExtResource("6_3pf4f")
-texture_pressed = ExtResource("7_gcsim")
-texture_hover = ExtResource("8_7uh2j")
-texture_disabled = ExtResource("6_3pf4f")
-texture_focused = ExtResource("8_7uh2j")
-stretch_mode = 1
+stretch_mode = 0
 
 [node name="SettingsButton" type="TextureButton" parent="maintitle"]
 layout_mode = 0
@@ -476,6 +419,5 @@ offset_right = 40.0
 offset_bottom = 40.0
 
 [connection signal="pressed" from="maintitle/PlayButton" to="." method="playButtonPressed"]
-[connection signal="pressed" from="maintitle/LevelSelectButton" to="." method="levelSelectPressed"]
 [connection signal="pressed" from="maintitle/SettingsButton" to="." method="_toggle_settings"]
 [connection signal="pressed" from="Levelselect/Return" to="." method="_toggle_settings"]
