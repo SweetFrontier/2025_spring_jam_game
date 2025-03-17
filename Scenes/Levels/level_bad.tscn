@@ -1,15 +1,13 @@
-[gd_scene load_steps=53 format=4 uid="uid://6o2fsv2mn55y"]
+[gd_scene load_steps=66 format=4 uid="uid://6o2fsv2mn55y"]
 
 [ext_resource type="PackedScene" uid="uid://bm67c4ebptsl8" path="res://Scenes/ScreenFx/Fader.tscn" id="1_s820v"]
-[ext_resource type="Script" uid="uid://cgmy1ler11cs2" path="res://Scripts/UI/dialogue.gd" id="2_bs1ma"]
-[ext_resource type="FontFile" uid="uid://cvaeo14ebg4he" path="res://Art/Fonts/Headlines-Bold.otf" id="3_jjvat"]
 [ext_resource type="FontFile" uid="uid://ulscv1lpl8mn" path="res://Art/Fonts/Questrial-Regular.ttf" id="4_36djd"]
-[ext_resource type="Texture2D" uid="uid://bouqbi02sddbi" path="res://Art/Sprites/collectibles/gem.png" id="5_85ajq"]
 [ext_resource type="Shader" uid="uid://db4wfleksuqbn" path="res://Scripts/shaders/layered_scrolling.gdshader" id="6_ffbrx"]
 [ext_resource type="Script" uid="uid://cfnxorq31tc57" path="res://Scripts/PauseMenu.gd" id="7_2v2bq"]
 [ext_resource type="Texture2D" uid="uid://dgmqfi0umiy4d" path="res://Art/UI/Pause/main/resume.png" id="8_xjbkc"]
 [ext_resource type="Texture2D" uid="uid://dfvw5e0sn4swg" path="res://Art/UI/crosshair.png" id="9_elor2"]
 [ext_resource type="Texture2D" uid="uid://bok8lkcpc4r30" path="res://Art/UI/Pause/main/resumeSelected.png" id="9_ja1cu"]
+[ext_resource type="FontFile" uid="uid://y2kyyo4bfpdm" path="res://Art/Fonts/toxigenesis bd.otf" id="10_elor2"]
 [ext_resource type="Texture2D" uid="uid://10oeumw5ttq1" path="res://Art/UI/Pause/main/settings.png" id="10_ue6n6"]
 [ext_resource type="Texture2D" uid="uid://clwokwkiuel0w" path="res://Art/UI/Pause/main/settingsSelected.png" id="11_elor2"]
 [ext_resource type="Texture2D" uid="uid://b1ogy1scrgwfh" path="res://Art/UI/Pause/main/exit.png" id="12_sbcfu"]
@@ -29,8 +27,12 @@
 [ext_resource type="PackedScene" uid="uid://b3qjnrjqnpqnd" path="res://Scenes/FX/tiny_light.tscn" id="22_jjvat"]
 [ext_resource type="FontFile" uid="uid://blvljxujr15rm" path="res://Art/Fonts/born2bsporty-fs.regular.otf" id="23_ja1cu"]
 [ext_resource type="Texture2D" uid="uid://bljeaca6a4uvp" path="res://Art/UI/recharging.png" id="24_ja1cu"]
-[ext_resource type="PackedScene" uid="uid://dltpp7i68arj2" path="res://Scenes/enemy.tscn" id="27_ue6n6"]
+[ext_resource type="PackedScene" uid="uid://d1158qxxh4spm" path="res://Scenes/Screens/respawnScreen.tscn" id="26_elor2"]
+[ext_resource type="AudioStream" uid="uid://dw575cwgh30ru" path="res://Sounds/player/death.ogg" id="27_sbcfu"]
 [ext_resource type="Script" uid="uid://droh1386rgjrh" path="res://Scripts/level/enemy_spawners.gd" id="30_ue6n6"]
+[ext_resource type="AudioStream" uid="uid://bir4u8nb88es4" path="res://Sounds/tutorial.ogg" id="31_elor2"]
+[ext_resource type="PackedScene" uid="uid://ewleqkurq0gn" path="res://Scenes/bullet.tscn" id="32_sbcfu"]
+[ext_resource type="ArrayMesh" uid="uid://c6wio62meiro" path="res://Art/Models/robit_Cube.res" id="32_smocn"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ffbrx"]
 atlas = ExtResource("19_ffbrx")
@@ -86,13 +88,92 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="Gradient" id="Gradient_46s56"]
-offsets = PackedFloat32Array(0, 0.234234, 0.432432, 1)
-colors = PackedColorArray(0, 0, 0, 0.580392, 1, 1, 1, 1, 0, 0, 0, 0.580392, 0, 0, 0, 0)
+[sub_resource type="Animation" id="Animation_elor2"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Text:text")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [""]
+}
 
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_p7efm"]
-gradient = SubResource("Gradient_46s56")
-width = 16
+[sub_resource type="Animation" id="Animation_ue6n6"]
+resource_name = "hello"
+length = 36.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Text:text")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.133333, 1.4, 5.06667, 9.26667, 12.0333, 19.4, 23.6667, 27.0667, 29.9333, 34.2, 35.6667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": ["", "[bgcolor=#000a](Fanfare)", "[bgcolor=#000a]Hello, new robot of the Intergalactic Violence Facilitation Corporation!", "[bgcolor=#000a]You have just been activated to protect emergency backup battery number 6352!", "[bgcolor=#000a]Extremely important. A great honor indeed.", "[bgcolor=#000a]Send the [LEFT SHIFT] signal to sprint
+the [LEFT CLICK] signal to fire your weapon, and the [WASD] signals to move around", "[bgcolor=#000a]Stand near the emergency backup battery to recharge your sprint and weapons power.", "[bgcolor=#000a]Listen for any approaching intruders and don't let them destroy the battery,", "[bgcolor=#000a]because it's very fragile and will break in one hit.", "[bgcolor=#000a]The Intergalactic Violence Facilitation Corporation thanks you for your understanding.", "[bgcolor=#000a](Fanfare)", ""]
+}
+tracks/1/type = "audio"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../CentralColumn/AudioStreamPlayer3D")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("31_elor2")
+}],
+"times": PackedFloat32Array(0)
+}
+tracks/1/use_blend = true
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../EnemySpawners")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(34.4667),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"start_to_spawn"
+}]
+}
+tracks/3/type = "method"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("../Music")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(35.8),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [0.0],
+"method": &"play"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_sbcfu"]
+_data = {
+&"RESET": SubResource("Animation_elor2"),
+&"hello": SubResource("Animation_ue6n6")
+}
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ue6n6"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_elor2"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sbcfu"]
 
 [sub_resource type="Gradient" id="Gradient_1jmas"]
 offsets = PackedFloat32Array(0, 0.39196, 1)
@@ -124,12 +205,253 @@ shader = ExtResource("15_ft7mh")
 shader_parameter/howTransparent = 0.5
 shader_parameter/threshold = 0.2
 
+[sub_resource type="Animation" id="Animation_sbcfu"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MenuOverlay/Respawn:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("MenuOverlay/Respawn:process_mode")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("MenuOverlay/Respawn/Label:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("MenuOverlay/Respawn/Respawn:process_mode")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_bj6cn"]
+resource_name = "default"
+length = 3.0
+step = 20.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MenuOverlay/Respawn:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("MenuOverlay/Respawn:process_mode")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [4]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("MenuOverlay/Respawn/Label:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 0, 0, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("MenuOverlay/Respawn/Respawn:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 0, 0, 1)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("MenuOverlay/Respawn/Respawn:process_mode")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [4]
+}
+tracks/5/type = "method"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("MenuOverlay/Respawn")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [1.0],
+"method": &"set_enemy_sounds"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_smocn"]
+resource_name = "to_death"
+length = 3.0
+step = 0.25
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MenuOverlay/Respawn:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.0333333),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("MenuOverlay/Respawn:process_mode")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.0333333),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [3]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("MenuOverlay/Respawn/Label:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.0333333, 1.6),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 1), Color(1, 1, 1, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("MenuOverlay/Respawn/Respawn:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(1.93333, 2.93333),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 1), Color(1, 1, 1, 1)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("MenuOverlay/Respawn/Respawn:process_mode")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 2.7),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [4, 3]
+}
+tracks/5/type = "method"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("MenuOverlay/Respawn/deathsound")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [0.0],
+"method": &"play"
+}]
+}
+tracks/6/type = "method"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("MenuOverlay/Respawn")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.5, 0.75, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"values": [{
+"args": [1.0],
+"method": &"set_enemy_sounds"
+}, {
+"args": [0.75],
+"method": &"set_enemy_sounds"
+}, {
+"args": [0.5],
+"method": &"set_enemy_sounds"
+}, {
+"args": [0.25],
+"method": &"set_enemy_sounds"
+}, {
+"args": [0.0],
+"method": &"set_enemy_sounds"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_bj6cn"]
+_data = {
+&"RESET": SubResource("Animation_sbcfu"),
+&"default": SubResource("Animation_bj6cn"),
+&"to_death": SubResource("Animation_smocn")
+}
+
 [sub_resource type="Sky" id="Sky_jjvat"]
 
 [sub_resource type="Environment" id="Environment_3chww"]
 background_mode = 2
 sky = SubResource("Sky_jjvat")
-ambient_light_color = Color(0.808998, 0.808998, 0.808998, 1)
 glow_normalized = true
 glow_intensity = 8.0
 glow_blend_mode = 1
@@ -253,6 +575,17 @@ shadow_mesh = SubResource("ArrayMesh_lud71")
 height = 17.2595
 radius = 4.89258
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_elor2"]
+size = Vector3(18, 15, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_sbcfu"]
+size = Vector3(18, 15, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_afpow"]
+emission_enabled = true
+emission = Color(1, 0, 0, 1)
+emission_energy_multiplier = 2.0
+
 [node name="3D Scene" type="Node3D"]
 
 [node name="Fader" parent="." instance=ExtResource("1_s820v")]
@@ -314,58 +647,27 @@ theme_override_constants/outline_size = 30
 theme_override_font_sizes/font_size = 81
 text = "[E]"
 
-[node name="Dialogue" type="ColorRect" parent="MenuOverlay" node_paths=PackedStringArray("root")]
-visible = false
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = 465.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0, 0, 0, 0.580392)
-script = ExtResource("2_bs1ma")
-root = NodePath("../..")
+[node name="StartAnimation" type="AnimationPlayer" parent="MenuOverlay"]
+libraries = {
+&"": SubResource("AnimationLibrary_sbcfu")
+}
+autoplay = "hello"
 
-[node name="Name" type="Label" parent="MenuOverlay/Dialogue"]
-layout_mode = 0
-offset_left = 1.0
-offset_top = -8.0
-offset_right = 252.0
-offset_bottom = 60.0
-theme_override_fonts/font = ExtResource("3_jjvat")
-theme_override_font_sizes/font_size = 48
-text = "Name"
-horizontal_alignment = 1
-
-[node name="Text" type="RichTextLabel" parent="MenuOverlay/Dialogue"]
-layout_mode = 0
-offset_left = 254.0
+[node name="Text" type="RichTextLabel" parent="MenuOverlay"]
+offset_left = 57.0
 offset_top = 16.0
-offset_right = 1218.0
-offset_bottom = 254.0
-theme_override_fonts/normal_font = ExtResource("4_36djd")
-theme_override_font_sizes/normal_font_size = 48
-text = "example text here asdfjklasdfjkladsfjkl asdfjklasdf"
-visible_characters = 43
+offset_right = 2389.0
+offset_bottom = 562.0
+scale = Vector2(0.5, 0.5)
+theme_override_constants/line_separation = 6
+theme_override_fonts/normal_font = ExtResource("10_elor2")
+theme_override_font_sizes/normal_font_size = 96
+theme_override_styles/fill = SubResource("StyleBoxFlat_ue6n6")
+theme_override_styles/background = SubResource("StyleBoxFlat_elor2")
+theme_override_styles/focus = SubResource("StyleBoxFlat_sbcfu")
+bbcode_enabled = true
+horizontal_alignment = 1
 visible_characters_behavior = 1
-visible_ratio = 0.862745
-
-[node name="TopFadePart" type="TextureRect" parent="MenuOverlay/Dialogue"]
-layout_mode = 0
-offset_right = 16.0
-offset_bottom = 1280.0
-rotation = -1.5708
-texture = SubResource("GradientTexture1D_p7efm")
-
-[node name="Triangle" type="TextureRect" parent="MenuOverlay/Dialogue"]
-visible = false
-texture_filter = 1
-layout_mode = 0
-offset_left = 1237.0
-offset_top = 94.0
-offset_right = 1269.0
-offset_bottom = 126.0
-texture = ExtResource("5_85ajq")
 
 [node name="PauseMenu" type="Control" parent="MenuOverlay" node_paths=PackedStringArray("Fader", "mainPauseMenu", "settingsMenu", "settingsDisplay")]
 process_mode = 3
@@ -474,12 +776,29 @@ script = ExtResource("16_a4j7n")
 [node name="SettingsMenu" parent="MenuOverlay/PauseMenu/SettingsMenu/SettingsSubviewport" instance=ExtResource("17_qu87b")]
 visible = false
 
-[node name="GUI" type="CanvasLayer" parent="."]
+[node name="Respawn" parent="MenuOverlay" instance=ExtResource("26_elor2")]
+
+[node name="Respawn" parent="MenuOverlay/Respawn" index="2"]
+modulate = Color(0, 0, 0, 1)
+
+[node name="DeathAnimation" type="AnimationPlayer" parent="MenuOverlay/Respawn"]
+process_mode = 3
+root_node = NodePath("../../..")
+libraries = {
+&"": SubResource("AnimationLibrary_bj6cn")
+}
+autoplay = "default"
+
+[node name="deathsound" type="AudioStreamPlayer3D" parent="MenuOverlay/Respawn"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.19677, 0)
+stream = ExtResource("27_sbcfu")
+attenuation_model = 3
+panning_strength = 0.4
+bus = &"Sounds"
 
 [node name="Music" type="AudioStreamPlayer" parent="."]
 process_mode = 3
 stream = ExtResource("18_s820v")
-autoplay = true
 bus = &"Music"
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
@@ -497,11 +816,8 @@ hudBattery = NodePath("../MenuOverlay/HUD/battery")
 hudPercent = NodePath("../MenuOverlay/HUD/percent")
 hudCharging = NodePath("../MenuOverlay/HUD/charging")
 
-[node name="enemy" parent="." instance=ExtResource("27_ue6n6")]
-transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 90, -21, 56)
-
 [node name="Lights" type="LightmapGI" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.8985, 8.50358, -2.84348)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.8101, 8.7033, -3.05269)
 quality = 2
 bounce_indirect_energy = 1.5
 denoiser_strength = 0.3
@@ -544,10 +860,12 @@ transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 27.525
 [node name="TinyLight10" parent="Lights" instance=ExtResource("22_jjvat")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -40.4093, -2.87911, 21.2201)
 
-[node name="EnemySpawners" type="Node3D" parent="."]
+[node name="EnemySpawners" type="Node3D" parent="." node_paths=PackedStringArray("player", "death_screen", "pause_screen")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.1856, 0, -2.84348)
 script = ExtResource("30_ue6n6")
-testDebugIndex = 4
+player = NodePath("../player")
+death_screen = NodePath("../MenuOverlay/Respawn/DeathAnimation")
+pause_screen = NodePath("../MenuOverlay/PauseMenu")
 
 [node name="SpawnPos1" type="Node3D" parent="EnemySpawners"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.1273, 14.3085, -83.2408)
@@ -589,6 +907,37 @@ metadata/_edit_lock_ = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.99182, 0)
 shape = SubResource("CylinderShape3D_ja1cu")
 
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="CentralColumn"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 13.9309, 0)
+attenuation_model = 3
+panning_strength = 0.2
+
+[node name="blockades" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -20.305, 0)
+
+[node name="AnimatableBody3D" type="AnimatableBody3D" parent="blockades"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="blockades/AnimatableBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.5, 7, 0)
+shape = SubResource("BoxShape3D_elor2")
+metadata/_edit_lock_ = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="blockades/AnimatableBody3D"]
+mesh = SubResource("BoxMesh_sbcfu")
+skeleton = NodePath("../CollisionShape3D")
+metadata/_edit_lock_ = true
+
+[node name="enemeshload" type="MeshInstance3D" parent="."]
+transform = Transform3D(1.4, 0, 0, 0, 1.4, 0, 0, 0, 1.4, 0.849108, -4.45486, -1.64038)
+mesh = ExtResource("32_smocn")
+skeleton = NodePath("")
+surface_material_override/2 = SubResource("StandardMaterial3D_afpow")
+
+[node name="Bullet" parent="enemeshload" instance=ExtResource("32_sbcfu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.99931, 0.932534, -1.35292)
+
 [connection signal="pressed" from="MenuOverlay/PauseMenu/MainPauseMenu/VBoxContainer/Resume" to="MenuOverlay/PauseMenu" method="togglePause"]
 [connection signal="pressed" from="MenuOverlay/PauseMenu/MainPauseMenu/VBoxContainer/Settings" to="MenuOverlay/PauseMenu" method="_on_settings_pressed"]
 [connection signal="pressed" from="MenuOverlay/PauseMenu/MainPauseMenu/VBoxContainer/Exit To Menu" to="MenuOverlay/PauseMenu" method="_on_quit_button_pressed"]
+
+[editable path="MenuOverlay/Respawn"]

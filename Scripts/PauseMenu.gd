@@ -69,6 +69,7 @@ func togglePause():
 
 func set_pausability(pause : bool):
 	pausable = pause
+	if (!pausable and get_tree().paused): togglePause()
 #endregion
 
 #region navigation

@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://b1bd6ddo0kmya"]
+
+[ext_resource type="AudioStream" uid="uid://dw575cwgh30ru" path="res://Sounds/player/death.ogg" id="1_sldp3"]
+
+[node name="EnemyDeathEffect" type="Node3D"]
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("1_sldp3")

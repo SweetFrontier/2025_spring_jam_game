@@ -10,7 +10,8 @@ config_version=5
 
 [application]
 
-config/name="RobotHorde?"
+config/name="Emergency Power"
+run/main_scene="uid://lf75pcv3t3aa"
 config/features=PackedStringArray("4.4", "GL Compatibility")
 run/max_fps=60
 config/icon="res://icon.svg"

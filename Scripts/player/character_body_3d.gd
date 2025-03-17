@@ -35,6 +35,7 @@ var applied_upgrades: Dictionary = {}
 @onready var shootsound = $shootsound
 @onready var anim = $AnimationPlayer
 @onready var playerLookingAt = $Camera3D/playerLookingAt
+@onready var gunAnimation = $Camera3D/Gun/gunAnimation
 
 @export var DialogueGUI : ColorRect
 @export var prompts : Node2D
@@ -109,6 +110,7 @@ func _physics_process(delta: float) -> void:
 	else: hudCharging.hide()
 
 func _process(_delta: float) -> void:
+	if (StopMoving): return
 	if Input.is_action_pressed("shoot") and Energy > perShotEnergy and can_shoot:
 		Energy -= perShotEnergy
 		update_hud()
@@ -116,7 +118,6 @@ func _process(_delta: float) -> void:
 		can_shoot = false
 		await get_tree().create_timer(fireRate).timeout
 		can_shoot = true
-	if (StopMoving): return
 	if (playerLookingAt.is_colliding()):
 		if (playerLookingAt.get_collider().is_in_group("npc")):
 			interactive_element_selected = playerLookingAt.get_collider()
@@ -128,14 +129,16 @@ func _process(_delta: float) -> void:
 		prompts.hide()
 		interactive_element_selected = null
 
-func freeze(freeze : bool):
+func freeze(freeze : bool = true):
 	StopMoving = freeze
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE if freeze else Input.MOUSE_MODE_CAPTURED)
 
 func shoot():
 	if bullet_scene:
-		# play shoot sound
+		# play shoot sound and animation
 		shootsound.play()
+		gunAnimation.stop()
+		gunAnimation.play("fire")
 		# make bullet
 		var bullet = bullet_scene.instantiate()
 		bullet.global_transform = $Camera3D/Gun/Muzzle.global_transform  # Spawn at muzzle position
@@ -168,6 +171,7 @@ func upgrade(upgradeType: Upgrade):
 
 func dead():
 	position = Vector3.ZERO
+	
 
 func update_hud():
 	hudBattery.play(str(25*clamp(int(round(Energy/25)), 0, 4)))

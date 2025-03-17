@@ -1,77 +1,58 @@
-[gd_scene load_steps=10 format=3 uid="uid://b6bgnigukck67"]
+[gd_scene load_steps=12 format=3 uid="uid://b6bgnigukck67"]
 
 [ext_resource type="Script" uid="uid://nv2oty0wji17" path="res://Scripts/player/character_body_3d.gd" id="1_cvnsp"]
 [ext_resource type="PackedScene" uid="uid://ewleqkurq0gn" path="res://Scenes/bullet.tscn" id="2_vgqql"]
-[ext_resource type="AudioStream" uid="uid://dkuh6y46a2i25" path="res://Sounds/player/shoot.ogg" id="3_6t5aa"]
+[ext_resource type="ArrayMesh" uid="uid://dnwhfjjctnjo0" path="res://Art/Models/gun_Cube_002.res" id="3_vgqql"]
+[ext_resource type="AudioStream" uid="uid://dubfggs6smc5e" path="res://Sounds/player/shoot.mp3" id="4_vgqql"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_grrho"]
 radius = 1.65704
 height = 8.2092
 
-[sub_resource type="BoxMesh" id="BoxMesh_pwrnl"]
-size = Vector3(1.2, 0.4, 1.2)
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_p8180"]
-transparency = 1
-albedo_color = Color(0, 0.701, 0.809, 0.107)
-emission_enabled = true
-emission = Color(3.85046e-07, 0.860202, 0.853731, 1)
-emission_energy_multiplier = 5.36
-
-[sub_resource type="Animation" id="Animation_2m8e5"]
+[sub_resource type="Animation" id="Animation_fkybt"]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("player/HeadBlock:visible")
+tracks/0/path = NodePath(".:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("player/HeadBlock:surface_material_override/0:albedo_color")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Color(0, 0.701, 0.809, 0.107)]
+"values": [Vector3(0.532966, -0.052748, -2.54567)]
 }
+
+[sub_resource type="Animation" id="Animation_vgqql"]
+resource_name = "fire"
+length = 0.2
+step = 0.01
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.03, 0.13, 0.2),
+"transitions": PackedFloat32Array(0.5, 2, 0.5, 1),
+"update": 0,
+"values": [Vector3(0.532966, -0.052748, -2.54567), Vector3(0.533, -0.053, -1.936), Vector3(0.532981, -0.052856, -2.28438), Vector3(0.532966, -0.052748, -2.54567)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_x3wgy"]
+_data = {
+&"RESET": SubResource("Animation_fkybt"),
+&"fire": SubResource("Animation_vgqql")
+}
+
+[sub_resource type="Animation" id="Animation_2m8e5"]
+length = 0.001
 
 [sub_resource type="Animation" id="Animation_71te8"]
 resource_name = "block"
 length = 0.7
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("player/HeadBlock:visible")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.0333333, 0.7),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 1,
-"values": [false, true, false]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("player/HeadBlock:surface_material_override/0:albedo_color")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.7),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Color(0, 0.701, 0.809, 0.107), Color(0, 0.701, 0.809, 0)]
-}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_jobuo"]
 _data = {
@@ -79,7 +60,7 @@ _data = {
 &"block": SubResource("Animation_71te8")
 }
 
-[node name="player" type="CharacterBody3D" node_paths=PackedStringArray("camera")]
+[node name="player" type="CharacterBody3D" node_paths=PackedStringArray("camera") groups=["player"]]
 script = ExtResource("1_cvnsp")
 bullet_scene = ExtResource("2_vgqql")
 spread_amount = 1.0
@@ -99,19 +80,24 @@ target_position = Vector3(0, 0, -5)
 collision_mask = 8
 
 [node name="Gun" type="Node3D" parent="Camera3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.532966, -0.71869, -0.647327)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.532966, -0.052748, -2.54567)
 metadata/_edit_group_ = true
 
 [node name="Muzzle" type="Marker3D" parent="Camera3D/Gun"]
 
-[node name="shootsound" type="AudioStreamPlayer3D" parent="."]
-stream = ExtResource("3_6t5aa")
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Camera3D/Gun"]
+transform = Transform3D(-1.15835e-08, 0, 0.265, 0, 0.265, 0, -0.265, 0, -1.15835e-08, 0.0998182, -0.528528, 0.895771)
+mesh = ExtResource("3_vgqql")
+skeleton = NodePath("../../..")
 
-[node name="HeadBlock" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.335827, 0)
-visible = false
-mesh = SubResource("BoxMesh_pwrnl")
-surface_material_override/0 = SubResource("StandardMaterial3D_p8180")
+[node name="gunAnimation" type="AnimationPlayer" parent="Camera3D/Gun"]
+libraries = {
+&"": SubResource("AnimationLibrary_x3wgy")
+}
+
+[node name="shootsound" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("4_vgqql")
+max_polyphony = 3
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 root_node = NodePath("../..")

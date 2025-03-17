@@ -11,6 +11,7 @@ func _ready():
 	queue_free()  # Delete itself after `lifetime` seconds
 
 func _on_body_entered(body):
-	if body.is_in_group("enemies"):  
+	if body.is_in_group("enemies"):
 		body.damage(direction)
+	if !body.is_in_group("player"):
 		queue_free()  # Destroy bullet on impact

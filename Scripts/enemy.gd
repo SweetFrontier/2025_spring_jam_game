@@ -1,11 +1,12 @@
 extends CharacterBody3D
 
 @export var speed : int = 20
-@export var distance_to_kill = 10
+@export var distance_to_kill = 12
 
 @onready var my_pitch = randf_range(0.8, 1.1)
 
-var health = 3
+var health = 2
+var done : bool = false
 
 signal kill_player
 
@@ -14,7 +15,7 @@ func _process(delta: float) -> void:
 	# Add the gravity.
 	if not is_on_floor():
 		velocity += get_gravity() * delta * 6
-	elif velocity == Vector3.ZERO:
+	elif velocity == Vector3.ZERO and !done:
 		velocity.y = 20
 	
 	# move to middle
@@ -27,10 +28,16 @@ func _process(delta: float) -> void:
 	velocity.z = expDecay(velocity.z, direction.z*speed, 12, delta)
 	move_and_slide()
 	
-	if (global_position.distance_to(Vector3.ZERO) < distance_to_kill):
+	if (global_position.distance_to(Vector3.ZERO) < distance_to_kill) and !done:
 		emit_signal("kill_player")
+		done = true
+	elif done: done = false
+	
 
-
+func playSound():
+	if done: return
+	$sounds.pitch_scale = randf_range(0.85, 1.2)
+	$sounds.play()
 
 func die():
 	call_deferred("queue_free")

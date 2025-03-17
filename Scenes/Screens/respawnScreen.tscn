@@ -1,5 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://dtiym8y1wv5om"]
+[gd_scene load_steps=6 format=3 uid="uid://d1158qxxh4spm"]
 
+[ext_resource type="Script" uid="uid://cntdny2omschj" path="res://Scripts/UI/respawn_screen.gd" id="1_crega"]
+[ext_resource type="FontFile" uid="uid://y2kyyo4bfpdm" path="res://Art/Fonts/toxigenesis bd.otf" id="1_e43bm"]
 [ext_resource type="Texture2D" uid="uid://8k283uci1dtu" path="res://Art/UI/Pause/settings/menubutton.png" id="1_x8vks"]
 [ext_resource type="Texture2D" uid="uid://b62ibdupapsg0" path="res://Art/UI/Pause/settings/menubutton_selected.png" id="2_e43bm"]
 [ext_resource type="FontFile" uid="uid://ulscv1lpl8mn" path="res://Art/Fonts/Questrial-Regular.ttf" id="3_crega"]
@@ -12,8 +14,27 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+script = ExtResource("1_crega")
 
-[node name="Graphics" type="TextureButton" parent="."]
+[node name="ColorRect" type="ColorRect" parent="."]
+custom_minimum_size = Vector2(1280, 720)
+layout_mode = 2
+color = Color(0, 0, 0, 1)
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_fonts/font = ExtResource("1_e43bm")
+theme_override_font_sizes/font_size = 76
+text = "YOU FAILED TO PROTECT
+THE BATTERY
+
+
+
+"
+horizontal_alignment = 1
+
+[node name="Respawn" type="TextureButton" parent="."]
 z_as_relative = false
 custom_minimum_size = Vector2(200, 60)
 layout_mode = 2
@@ -24,7 +45,7 @@ ignore_texture_size = true
 stretch_mode = 4
 metadata/_edit_group_ = true
 
-[node name="Label" type="Label" parent="Graphics"]
+[node name="Label" type="Label" parent="Respawn"]
 z_as_relative = false
 layout_mode = 1
 anchors_preset = 15
@@ -37,3 +58,5 @@ theme_override_font_sizes/font_size = 40
 text = "Respawn"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[connection signal="pressed" from="Respawn" to="." method="_on_respawn_pressed"]

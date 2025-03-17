@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://btc5jl1gkm0ae" path="res://Scripts/bullet.gd" id="1_xjght"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_xjght"]
-radius = 0.001
+radius = 0.219857
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xjght"]
 albedo_color = Color(0, 0, 0, 1)
@@ -16,6 +16,8 @@ disable_receive_shadows = true
 
 [sub_resource type="SphereMesh" id="SphereMesh_oduel"]
 material = SubResource("StandardMaterial3D_xjght")
+radius = 0.25
+height = 0.5
 
 [node name="Bullet" type="RigidBody3D"]
 collision_layer = 2
